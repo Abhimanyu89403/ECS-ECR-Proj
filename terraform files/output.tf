@@ -4,8 +4,8 @@ output "vpc_id"{
 }
 
 output "alb_dns" {
-    description = ""
-    value = 
+    description = "The application load balancer DNS name is"
+    value = aws_load_balancer.alb.dns_name
 }
 
 output "ecs_cluster_id" {
