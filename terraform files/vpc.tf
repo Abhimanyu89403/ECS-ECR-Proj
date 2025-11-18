@@ -19,7 +19,7 @@ resource "aws_subnet" "pubsub" {
     vpc_id = aws_vpc.vpc.id
     availability_zone = "ap-south-1a"
     map_public_ip_on_launch = true
-    cidr_block = "0.0.0.0/16"
+    cidr_block = "10.0.0.0/16"
     tags = {
         Name = "${var.name}-pubsub"
     }

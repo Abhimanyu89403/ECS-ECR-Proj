@@ -9,6 +9,7 @@ resource "aws_load_balancer" "alb" {
 resource "aws_target_group" "tg" {
     name = "${var.name}-tg"
     port = var.container_port
+    target_type = "ip"
     protocol = "HTTP"
     vpc_id = aws_vpc.vpc.id
     health_check {
@@ -17,8 +18,7 @@ resource "aws_target_group" "tg" {
         interval = 30
         timeout = 5
         healthy_threshold = 3
-        unhealthy_threshold = 2
-        target_type = "ip        
+        unhealthy_threshold = 2      
     }
 }
 
