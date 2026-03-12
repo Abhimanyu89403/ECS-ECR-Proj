@@ -1,11 +1,10 @@
 terraform {
+    required_version = "~>1.14.0"
     required_providers {
-        aws = {
-            bucket = "abhibuckettfstate89403-bcde"
-            key = "ecs-ecr/tfstate"
-            region = "ap-south-1"
-            encrypt = true
-            use_lockfile = true
-        }
+      source = "hashicorp/aws"
+      version = "~>6.28.0"
     }
+}
+provider "aws" {
+    region = "ap-south-1"
 }
