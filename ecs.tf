@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "retail_clust" {
-  name = "retail_clust"
+  name = "retail_${var.environment}clust"
 
   tags = {
-    owner = "Abhimanyu"
-    team  = "Devops"
+    owner = var.owner
+    team  = var.team
   }
 }
 
@@ -16,17 +16,17 @@ resource "aws_ecs_task_definition" "cart_task_def" {
   family                   = "cart_task_def"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = 2048
-  memory                   = 4096
+  cpu                      = var.cpu
+  memory                   = var.memory
   container_definitions = jsonencode([
     {
       name   = "cart_pods"
       image  = "${aws_ecr_repository.cart_repository_url}:latest"
-      cpu    = 2048
-      memory = 4096
+      cpu    = var.cpu
+      memory = var.memory
       portMappings = [{
-        containerPort = 80
-        hostPort      = 80
+        containerPort = var.container_port
+        hostPort      = var.container_port
       }]
       logConfiguration = {
         logDriver = "awsLogs"
@@ -45,12 +45,12 @@ resource "aws_ecs_service" "cart_service" {
   cluster         = aws_ecs_cluster.retail_clust.id
   task_definition = aws_ecs_task_definition.cart_task_def.arn
   launch_type     = "FARGETE"
-  desired_count   = 5
+  desired_count   = var.desired_count
 }
 
 resource "aws_appautoscaling_target" "cart_target" {
-  max_capacity       = 10
-  min_capacity       = 3
+  max_capacity       = var.max_capacity
+  min_capacity       = var.min_capacity
   resource_id        = "service/${aws_ecs_cluster.retail_clust.name}/${aws_ecs_service.cart_service.name}"
   scalable_dimension = "ecs:service:desired_count"
   service_namespace  = "ecs"

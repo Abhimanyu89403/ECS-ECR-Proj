@@ -1,0 +1,9 @@
+environment = "production"
+cpu = 2048
+memory = 4096
+desired_count = 5
+min_capacity =  3
+max_capacity = 10
+owner = "Abhimanyu"
+team = "Devops"
+container_port = 80
