@@ -23,7 +23,7 @@ resource "aws_ecs_task_definition" "cart_task_def" {
             name = "cart_pods"
             image = ""
             cpu = 512
-            memory = 512
+            memory = 1024
             portMappings = [
                 containerPort = 80
                 hostPort = 80
