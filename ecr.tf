@@ -14,9 +14,8 @@ resource "aws_ecr_repository" "cart_repo" {
 }
 resource "aws_ecr_lifecycle_policy" "cart_repo_policy" {
     repository = aws_ecr_repository.cart_repo.name
-    policy = jsonencode([
-        {
-            rules = {
+    policy = jsonencode({
+            rules = [{
                 rulePriority = 10
                 description = "Kepp 10 images"
                 selection = {
@@ -27,7 +26,6 @@ resource "aws_ecr_lifecycle_policy" "cart_repo_policy" {
                 action = {
                     type = "expire"
                 }
-            }
-        }
-    ])
+            }]
+        })
 }
