@@ -1,0 +1,9 @@
+environment = "Development"
+cpu = 1024
+memory = 2048
+desired_count = 3
+min_capacity =  2
+max_capacity = 6
+owner = "Abhimanyu"
+team = "Devops"
+container_port = 3306
