@@ -46,6 +46,12 @@ resource "aws_ecs_service" "cart_service" {
     task_definition = aws_ecs_task_definition.cart_task_def.arn
     launch_type = "FARGATE"
     desired_count = var.desired_count
+
+    load_balancer {
+        target_group_arn = aws_lb_target_group.cart_tg.arn
+        container_name = "cart-container"
+        container_port = var.container_port
+    }
 }
 
 resource "aws_appautoscaling_target" "cart_target"{

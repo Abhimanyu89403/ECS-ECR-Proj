@@ -4,8 +4,8 @@ resource "aws_security_group" "cart_sg" {
     vpc_id = []
 
     ingress {
-        from_port = 80
-        to_port = 80
+        from_port = 3306
+        to_port = 3306
         protocol = "TCP"
         security_groups = [aws_security_groups.cart_sg.id]
     }
@@ -18,5 +18,23 @@ resource "aws_security_group" "cart_sg" {
     }
     tags = {
         Name = "ecs-sg"
+    }
+}
+resource "aws_security_group" "lb_sg"{
+    name = "${var.environment}-lb-sg"
+    description = "allow traffic from internet to lb"
+    vpc_id = []
+
+    ingress {
+        from_port = 443
+        to_port = 443
+        protocol = "HTTP" 
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
