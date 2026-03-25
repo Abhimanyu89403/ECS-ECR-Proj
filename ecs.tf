@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "cart_task_def" {
     family = "cart_task_def"
     requires_compatibilities = ["FARGATE"]
     network_mode = "awsvpc"
-    cpu = 2048
+    cpu = 4096
     memory = 4096
     container_definitions = jsonencode([
         {
