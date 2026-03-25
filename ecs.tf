@@ -21,17 +21,17 @@ resource "aws_ecs_task_definition" "cart_task_def" {
     container_definitions = jsonencode([
         {
             name = "cart_pods"
-            image = ""
+            image = "${aws_ecs_repository.cart_repo.repository_url}:Latest"
             cpu = 512
             memory = 1024
-            portMappings = [
+            portMappings = [{
                 containerPort = 80
                 hostPort = 80
-            ]
+        }]
             logConfiguration = {
                 logDriver = "awsLogs"
                     options = {
-                        awslogs-group = "aws_cloudwatch_log_group.cart_logs.name"
+                        awslogs-group = aws_cloudwatch_log_group.cart_logs.name
                         awsLogs-region = "ap-south-1"
                         awsLogs-stream-prefix = "ecs"
                     }
@@ -44,7 +44,7 @@ resource "aws_ecs_service" "cart_service" {
     name = "app-service"
     cluster = aws_ecs_cluster.retail_clust.id
     task_definition = aws_ecs_task_definition.cart_task_def.arn
-    launch_type = "FARGETE"
+    launch_type = "FARGATE"
     desired_count = 3
 }
 
@@ -67,7 +67,7 @@ resource "aws_appautoscaling_policy" "cpu_scaling" {
       target_value = 60
 
       predefined_metric_specification {
-        predefined_metric_type = "ECSServiceAveragerCPUUtilization"
+        predefined_metric_type = "ECSServiceAverageCPUUtilization"
       }
       scale_in_cooldown = 60
       scale_out_cooldown = 60
