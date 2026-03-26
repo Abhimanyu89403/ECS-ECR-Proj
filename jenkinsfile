@@ -32,17 +32,17 @@ pipeline {
         }
         stage ('intiate terraform'){
             steps {
-                sh 'terraform init'
+                bat 'terraform init'
             }
         }
         stage ('validate terraform'){
             steps {
-                sh 'terraform validate'
+                bat 'terraform validate'
             }
         }
         stage ('plan terraform state file'){
             steps {
-                sh "terraform plan -var-file=env/$ENV.tfvars -out=tfplan"
+                bat "terraform plan -var-file=env/$ENV.tfvars -out=tfplan"
             }
         }
         stage ('approval only for prod'){
@@ -55,7 +55,7 @@ pipeline {
         }
         stage ('apply the infra'){
             steps {
-                sh 'terraform apply -auto-approve tfplan'
+                bat 'terraform apply -auto-approve tfplan'
             }
         }
     }
