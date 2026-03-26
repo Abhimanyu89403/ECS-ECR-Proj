@@ -52,6 +52,11 @@ resource "aws_ecs_service" "cart_service" {
         container_name = "cart-container"
         container_port = var.container_port
     }
+    network_configuration {
+      subnets = [aws_subnet.private_subnet.id]
+      security_groups = [aws_security_group.cart_sg.id]
+      assign_public_ip = false
+    }
 }
 
 resource "aws_appautoscaling_target" "cart_target"{
