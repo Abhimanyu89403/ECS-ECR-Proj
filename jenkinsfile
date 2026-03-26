@@ -1,18 +1,19 @@
 pipeline {
-    agent any {
+    agent any
+
         environment {
             AWS_REGION = "ap-south-1"
-            TF_VERSION = ">~1.6.0"
+            TF_VERSION = ">~ 1.6.0"
         }
-    }
+    
     stages {
-        stage ('Checkout Code')
+        stage ('Checkout Code') {
             steps {
                 checkout scm
             }
         }
 
-        stage ('Set Environment'){
+        stage ('Set Environment') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev'){
@@ -24,7 +25,7 @@ pipeline {
                     else if (env.BRANCH_NAME == 'prod'){
                         env.ENV = "prod"
                     }else {
-                        error ('unsupported branch: ${env.BRANCH_NAME}')
+                        error (" Unsupported branch: ${env.BRANCH_NAME} ")
                     }
                 }
             }
@@ -41,7 +42,7 @@ pipeline {
         }
         stage ('plan terraform state file'){
             steps {
-                sh 'terraform plan -var-file=env/$ENV.tfvars -out=tfplan'
+                sh "terraform plan -var-file=env/$ENV.tfvars -out=tfplan"
             }
         }
         stage ('approval only for prod'){
@@ -57,4 +58,5 @@ pipeline {
                 sh 'terraform apply -auto-approve tfplan'
             }
         }
+    }
 }
