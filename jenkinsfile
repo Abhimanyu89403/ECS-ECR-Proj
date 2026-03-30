@@ -42,7 +42,8 @@ pipeline {
         }
         stage ('plan terraform state file'){
             steps {
-                bat "terraform plan -var-file=env/$ENV.tfvars -out=tfplan"
+                bat "terraform plan -var-file=${env.ENV}.tfvars -out=tfplan"
+                bat "terraform show tfplan"
             }
         }
         stage ('approval only for prod'){
@@ -53,9 +54,10 @@ pipeline {
                 input message : "approve terraform apply for prod"
             }
         }
-        stage ('apply the infra'){
+        stage ('apply the infra') {
             steps {
-                bat 'terraform apply -auto-approve tfplanbat            }
+                bat 'terraform apply -auto-approve tfplan          
+                }
         }
     }
 }
