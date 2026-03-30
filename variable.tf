@@ -1,6 +1,6 @@
 variable "environment" {
     description = "in which environment the code is"
-    type = "string"
+    type = string
 }
 variable "cpu" {
     description = "the cpu capacity"
@@ -32,5 +32,5 @@ variable "team" {
 }
 variable "container_port" {
     description = "what port does the container listen to"
-    type = "Number"
+    type = number
 }
