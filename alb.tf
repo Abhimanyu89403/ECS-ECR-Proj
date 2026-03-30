@@ -3,7 +3,7 @@ resource "aws_lb" "retail_lb" {
     internal = false
     load_balancer_type = "application"
     security_groups = ["aws_security_group.lb_sg.id"]
-    subnets = [aws_subnet.public_subnet.id]
+    subnets = aws_subnet.public_subnet.id
 
     enable_deletion_protection = true
     enable_cross_zone_load_balancing = true
@@ -17,9 +17,9 @@ resource "aws_lb" "retail_lb" {
 resource "aws_lb_target_group" "cart_tg" {
     name = "${var.environment}-cart-tg"
     port = var.container_port
-    protocol = "TCP"
+    protocol = "http"
     target_type = "ip"
-    vpc_id = [aws_vpc.retail_vpc.id]
+    vpc_id = aws_vpc.retail_vpc.id
 
     health_check {
         path = "/health"
