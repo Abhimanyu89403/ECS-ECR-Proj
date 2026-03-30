@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage ('intiate terraform'){
+        stage ('initiate terraform'){
             steps {
                 bat 'terraform init'
             }
@@ -56,7 +56,7 @@ pipeline {
         }
         stage ('apply the infra') {
             steps {
-                bat 'terraform apply -auto-approve tfplan          
+                bat 'terraform apply -auto-approve tfplan'
                 }
         }
     }
