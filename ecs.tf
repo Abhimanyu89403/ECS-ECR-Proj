@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "retail_clust" {
-  name = "retail_${var.environment}clust"
+  name = "retail_${var.environment}-clust"
 
   tags = {
     owner = var.owner
@@ -44,7 +44,7 @@ resource "aws_ecs_service" "cart_service" {
   name            = "app-service"
   cluster         = aws_ecs_cluster.retail_clust.id
   task_definition = aws_ecs_task_definition.cart_task_def.arn
-  launch_type     = "FARGETE"
+  launch_type     = "FARGATE"
   desired_count   = var.desired_count
 }
 
