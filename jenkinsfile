@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage ('intiate terraform'){
+        stage ('initiate terraform'){
             steps {
                 bat 'terraform init'
             }
