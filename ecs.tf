@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "cart_task_def" {
     container_definitions = jsonencode([
         {
             name = "cart_pods"
-            image = "${aws_ecs_repository.cart_repo.repository_url}:Latest"
+            image = "396608811643.dkr.ecr.ap-south-1.amazonaws.com/prod_cart_repo:v4"
             cpu = var.cpu
             memory = var.memory
             portMappings = [{
@@ -29,11 +29,11 @@ resource "aws_ecs_task_definition" "cart_task_def" {
                 hostPort = var.container_port
         }]
             logConfiguration = {
-                logDriver = "awsLogs"
+                logDriver = "awslogs"
                     options = {
                         awslogs-group = aws_cloudwatch_log_group.cart_logs.name
-                        awsLogs-region = "ap-south-1"
-                        awsLogs-stream-prefix = "ecs"
+                        awslogs-region = "ap-south-1"
+                        awslogs-stream-prefix = "ecs"
                     }
             } 
         }

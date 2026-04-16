@@ -1,20 +1,20 @@
 resource "aws_security_group" "cart_sg" {
     name = "cart-ecs-service-sg"
     description = "allow traffic from lb to ecs"
-    vpc_id = []
+    vpc_id = aws_vpc.retail_vpc.id
 
     ingress {
         from_port = 3306
         to_port = 3306
         protocol = "TCP"
-        security_groups = [aws_security_groups.cart_sg.id]
+        
     }
     egress {
         description = "allow outbound traffic from ecr to pull images"
         from_port = 0
         to_port = 0
         protocol = "TCP"
-        security_groups = [aws_security_groups.cart_sg.id]
+        
     }
     tags = {
         Name = "ecs-sg"
@@ -23,7 +23,7 @@ resource "aws_security_group" "cart_sg" {
 resource "aws_security_group" "lb_sg"{
     name = "${var.environment}-lb-sg"
     description = "allow traffic from internet to lb"
-    vpc_id = []
+    vpc_id = aws_vpc.retail_vpc.id
 
     ingress {
         from_port = 443
